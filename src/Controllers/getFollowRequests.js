@@ -1,12 +1,21 @@
 const { FollowRequest, User } = require('../db');
 
 const getFollowRequests = async (req, res) => {
-  const requests = await FollowRequest.findAll({
-    where: { targetId: req.userId, status: 'pending' },
-    include: [{ model: User, as: 'requester', attributes: ['id', 'username', 'avatar'] }]
-  });
+try {
+    const targetId = req.userId; // <- este valor viene del middleware `requireAuth`
 
-  res.json(requests);
+    const requests = await FollowRequest.findAll({
+      where: { targetId }, // <---- FILTRA por el usuario autenticado
+      include: [{ model: User, as: 'requester' }],
+      order: [['createdAt', 'DESC']],
+    });
+
+    console.log("Solicitudes encontradas:", requests.length);
+    res.json(requests);
+  } catch (error) {
+    console.error("ERROR GETfOLLOWrEQ /GFR:", error);
+    res.status(500).json({ message: "Error al obtener solicitudes" });
+  }
 };
 
 module.exports = getFollowRequests;

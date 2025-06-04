@@ -1,4 +1,4 @@
-const { FollowRequest } = require('../db');
+const { FollowRequest, User, Notification} = require('../db');
 
 const acceptFollowRequest = async (req, res) => {
   const requestId = req.params.requestId;
@@ -19,7 +19,7 @@ const acceptFollowRequest = async (req, res) => {
   await follower.addFollowing(following);
  await Notification.create({
       type: "request_accepted",
-      recipientId: request.senderId, // el que mandó la solicitud
+      recipientId: request.requesterId, // el que mandó la solicitud
       actorId: req.user.id,          // el que aceptó
     });
   res.json({ message: 'Solicitud aceptada.' });

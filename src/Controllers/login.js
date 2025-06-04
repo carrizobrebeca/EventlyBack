@@ -22,7 +22,8 @@ const login = async (req, res) => {
 
   res.json({ token, user });
 } catch (error) {
-  return res.status(500).json({ message: "Error en el servidor" });
+  // return res.status(500).json({ message: "Error en el servidor" });
+    console.error("ERROR POST /post:", error); 
 }
 };
 module.exports = login;

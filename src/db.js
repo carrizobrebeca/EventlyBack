@@ -28,8 +28,16 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Event, Post, Comment, Like, Follow, Notification} = sequelize.models;
 
+
+const { User, Event, Post, Comment, FollowRequest, Notification} = sequelize.models;
+
+FollowRequest.belongsTo(User, { foreignKey: 'requesterId', as: 'requester' });
+FollowRequest.belongsTo(User, { foreignKey: 'targetId', as: 'target' });
+
+// Opcional si querés acceder inversamente
+User.hasMany(FollowRequest, { foreignKey: 'requesterId', as: 'sentRequests' });
+User.hasMany(FollowRequest, { foreignKey: 'targetId', as: 'receivedRequests' });
 
 Notification.belongsTo(User, { as: 'recipient', foreignKey: 'recipientId' });
 Notification.belongsTo(User, { as: 'actor', foreignKey: 'actorId' });
@@ -44,19 +52,6 @@ Comment.belongsTo(Post);
 User.belongsToMany(Post, { through: 'Like', as: 'LikedPosts' });
 Post.belongsToMany(User, { through: 'Like', as: 'Likers' });
 
-//cuando borre la db este no va 
-// User.belongsToMany(User, {
-//   through: 'Follow',
-//   as: 'Followers',
-//   foreignKey: 'followingId',
-//   otherKey: 'followerId',
-// });
-// User.belongsToMany(User, {
-//   through: 'Follow',
-//   as: 'Following',
-//   foreignKey: 'followerId',
-//   otherKey: 'followingId',
-// });
 
 
 //van estos dos de followRequest , mover archovos a model:

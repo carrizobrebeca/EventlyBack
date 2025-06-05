@@ -19,6 +19,7 @@ const login = async (req, res) => {
 
   // Aquí generas el token JWT o sesión
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+console.log(token);
 
   res.json({ token, user });
 } catch (error) {

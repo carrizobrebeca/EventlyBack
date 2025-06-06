@@ -18,11 +18,12 @@ const requireAuth = require('../middlewares/middlewere');
 const getFollowRequests = require('../Controllers/getFollowRequests');
 const { acceptFollowRequestFromNotification } = require('../Controllers/acceptFollowRequestFromNotification');
 const { acceptFollowRequest } = require('../Controllers/acceptFollowRequest');
+const chatRouter = require('./chatRouter');
 
 
 const router = Router();
 
-
+router.use("/chat", chatRouter);
 router.post('/request/:id', requireAuth, sendFollowRequest);
 // router.put('/accept/:requestId', requireAuth, acceptFollowRequest);
 router.put('/reject/:requestId', requireAuth, rejectFollowRequest);

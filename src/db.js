@@ -30,8 +30,24 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Event, Post, Comment, FollowRequest, Notification} = sequelize.models;
+const { User, Event, Post, Comment, FollowRequest, Notification, Message, Chat} = sequelize.models;
 
+// User
+User.hasMany(Message, { foreignKey: "senderId" });
+User.hasMany(Chat, { foreignKey: "user1Id", as: "chatsInitiated" });
+User.hasMany(Chat, { foreignKey: "user2Id", as: "chatsReceived" });
+
+// Chat
+Chat.belongsTo(User, { foreignKey: "user1Id", as: "user1" });
+Chat.belongsTo(User, { foreignKey: "user2Id", as: "user2" });
+Chat.hasMany(Message, { foreignKey: "chatId" });
+
+// Message
+Message.belongsTo(Chat, { foreignKey: "chatId" });
+Message.belongsTo(User, { foreignKey: "senderId" });
+
+
+//Follow
 FollowRequest.belongsTo(User, { foreignKey: 'requesterId', as: 'requester' });
 FollowRequest.belongsTo(User, { foreignKey: 'targetId', as: 'target' });
 

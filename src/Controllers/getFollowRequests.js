@@ -13,8 +13,8 @@ try {
     
     });
 
-    console.log("Solicitudes encontradas:", requests.length);
-    console.log("Solicitudes encontradas:", JSON.stringify(requests, null, 2));
+    // console.log("Solicitudes encontradas:", requests.length);
+    // console.log("Solicitudes encontradas:", JSON.stringify(requests, null, 2));
     res.json(requests);
   } catch (error) {
     console.error("ERROR GETfOLLOWrEQ /GFR:", error);

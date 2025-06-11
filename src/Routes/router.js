@@ -18,6 +18,8 @@ const requireAuth = require('../middlewares/middlewere');
 const getFollowRequests = require('../Controllers/getFollowRequests');
 const { acceptFollowRequestFromNotification } = require('../Controllers/acceptFollowRequestFromNotification');
 const { acceptFollowRequest } = require('../Controllers/acceptFollowRequest');
+const chatRouter = require('./chatRouter');
+const messageRouter = require('./messageRouter');
 
 
 const router = Router();
@@ -29,7 +31,8 @@ router.put('/reject/:requestId', requireAuth, rejectFollowRequest);
 router.get('/requests', requireAuth, getFollowRequests);
 router.post('/followRequests/accept/:notificationId', requireAuth, acceptFollowRequestFromNotification);
 router.put('/accept/', requireAuth, acceptFollowRequest);
-
+router.use("/message", messageRouter);
+router.use("/chat", chatRouter);
 router.use("/users", usersRouter);
 router.use("/event", eventRouter);
 router.use("/post", postRouter);

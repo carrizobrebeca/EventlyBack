@@ -20,6 +20,7 @@ const { acceptFollowRequestFromNotification } = require('../Controllers/acceptFo
 const { acceptFollowRequest } = require('../Controllers/acceptFollowRequest');
 const chatRouter = require('./chatRouter');
 const messageRouter = require('./messageRouter');
+const { getEventInvitations } = require('../Controllers/getEventInvitations');
 
 
 const router = Router();
@@ -37,6 +38,7 @@ router.use("/users", usersRouter);
 router.use("/event", eventRouter);
 router.use("/post", postRouter);
 router.post("/login", login);
+router.get('/:eventId/invitations', getEventInvitations);
 router.get('/validate-token', requireAuth, async (req, res) => {
   try {
     const user = await User.findByPk(req.userId);

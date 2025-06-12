@@ -1,3 +1,4 @@
+const { addUserToEvent } = require("../Controllers/addUserToEvent");
 const { getEvent } = require("../Controllers/getEvent");
 const { postEvent } = require("../Controllers/postEvent");
 
@@ -21,8 +22,22 @@ const getEventHandler = async (req, res)=>{
  }  
 
 }
+
+const addUsersEventHandler = async (req, res) => {
+  const { eventId } = req.params;
+  const { userIds } = req.body; 
+
+  try {
+     const response = await addUserToEvent(eventId, userIds );
+    res.status(200).json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error al invitar usuarios' });
+  }
+}
  
 module.exports= {
     postEventHandler,
-    getEventHandler
+    getEventHandler,
+    addUsersEventHandler
 }

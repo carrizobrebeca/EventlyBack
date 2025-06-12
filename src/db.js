@@ -30,7 +30,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Event, Post, Comment, FollowRequest, Notification, Message, Chat} = sequelize.models;
+const { User, Event, Post, Comment, FollowRequest, Notification, Message, Chat, EventInvitation} = sequelize.models;
 
 // User
 User.hasMany(Message, { foreignKey: "senderId" });
@@ -98,7 +98,11 @@ Post.belongsTo(User, { foreignKey: 'userId' });
 
 Event.hasMany(Post, { foreignKey: 'eventId' });
 Post.belongsTo(Event, { foreignKey: 'eventId' });
+User.hasMany(EventInvitation, { foreignKey: "userId" });
+Event.hasMany(EventInvitation, { foreignKey: "eventId" });
 
+EventInvitation.belongsTo(User, { foreignKey: "userId" });
+EventInvitation.belongsTo(Event, { foreignKey: "eventId" });
 module.exports = {
     ...sequelize.models,
     conn: sequelize,

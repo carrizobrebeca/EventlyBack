@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       allowNull: false,
     },
- eventDate: {
+    eventDate: {
       type: DataTypes.DATEONLY, // Solo la fecha (YYYY-MM-DD)
       allowNull: false,
     },

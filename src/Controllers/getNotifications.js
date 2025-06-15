@@ -1,16 +1,15 @@
-const { Event } = require('../db');
+const { User, Notification } = require('../db');
 const getNotifications = async (req, res) => {
   try {
+    const { userId } = req.params;
     const notifications = await Notification.findAll({
-      where: { recipientId: req.user.id },
-      include: [{ model: User, as: "actor", attributes: ["id", "name", "image"] }],
-      order: [["createdAt", "DESC"]],
+      where: { recipientId: userId },
+      include: [{ model: User, as: 'actor', attributes: ['name','userName', 'image'] }],
+      order: [['createdAt', 'ASC']]
     });
-
     res.json(notifications);
-  } catch (error) {
-    console.error("Error al obtener notificaciones:", error);
-    res.status(500).json({ message: "Error al obtener notificaciones" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 module.exports = {getNotifications};

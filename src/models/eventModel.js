@@ -39,7 +39,13 @@ module.exports = (sequelize) => {
     eventTime: {
       type: DataTypes.TIME, // Solo la hora (HH:mm:ss)
       allowNull: false,
+    },
+    isPrivate: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true, // privada por defecto
     }
+
   }, {
 
     timestamps: true, // Habilita los timestamps (createdAt y updatedAt)

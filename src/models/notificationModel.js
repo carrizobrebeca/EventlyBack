@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    postId: {
+  type: DataTypes.UUID,
+  allowNull: true,
+},
   });
 
   return Notification;

@@ -29,12 +29,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    isPrivate: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true, // privada por defecto
+    }
+
   }, {
     timestamps: true,
-   
+
   });
 
-  User.prototype.validPassword = function(password) {
+  User.prototype.validPassword = function (password) {
     return password === this.password;
   };
 

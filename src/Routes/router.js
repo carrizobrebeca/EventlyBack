@@ -21,6 +21,10 @@ const { acceptFollowRequest } = require('../Controllers/acceptFollowRequest');
 const chatRouter = require('./chatRouter');
 const messageRouter = require('./messageRouter');
 const { getEventInvitations } = require('../Controllers/getEventInvitations');
+const { likePost, dislikePost } = require('../Controllers/likePost');
+const getPostLikers = require('../Controllers/getPostLikers');
+const { getNotifications } = require('../Controllers/getNotifications');
+
 
 
 const router = Router();
@@ -39,6 +43,10 @@ router.use("/event", eventRouter);
 router.use("/post", postRouter);
 router.post("/login", login);
 router.get('/:eventId/invitations', getEventInvitations);
+router.post('/:id/like', likePost);
+router.post('/:id/dislike', dislikePost);
+router.get('/:id/likers', getPostLikers);
+router.get('/notifications/:userId', getNotifications);
 router.get('/validate-token', requireAuth, async (req, res) => {
   try {
     const user = await User.findByPk(req.userId);
